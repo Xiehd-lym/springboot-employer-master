@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/layuimini.css?v=2.0.4.2}" media="all">
+    <link rel="stylesheet" th:href="@{/css/themes/default.css}" media="all">
+    <link rel="stylesheet" th:href="@{/lib/font-awesome-4.7.0/css/font-awesome.min.css}" media="all">
+    <title>Title</title>
+</head>
+
+<style>
+    body{
+        padding-left: 50px;
+    }
+    .look-item{
+       /* background-color: red;*/
+        height: 50px;
+        width: 200px;
+        float: left;
+        margin: 10px 50px;
+        line-height: 50px;
+
+    }
+
+</style>
+
+<body>
+<div th:object="${emp}">
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>普通面板</legend>
+</fieldset>
+
+<!--<div class="layui-bg-gray" style="padding: 30px;">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md6">
+            <div class="layui-panel">
+                <div style="padding: 50px 30px;">一个面板</div>
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <div class="layui-panel">
+                <div style="padding: 50px 30px;">一个面板</div>
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <div class="layui-panel">
+                <div style="padding: 50px 30px;">一个面板</div>
+            </div>
+        </div>
+    </div>
+</div>-->
+<div class="look-item">姓名:&nbsp;&nbsp;&nbsp;<span th:text="*{staffName}"></span></div>
+<div class="look-item">性别:&nbsp;&nbsp;&nbsp;<span th:text="*{staffSex}"></span></div>
+<div class="look-item">年龄:&nbsp;&nbsp;&nbsp;<span th:text="*{staffAge}"></span></div>
+    <div class="look-item">民族:&nbsp;&nbsp;&nbsp;<span th:text="*{staffNation}"></span></div>
+    <div class="look-item">身份证号:&nbsp;&nbsp;&nbsp;<span th:text="*{staffNo}"></span></div>
+    <div class="look-item">员工编号:&nbsp;&nbsp;&nbsp;<span th:text="*{sraffNumber}"></span></div>
+    <div class="look-item">岗位:&nbsp;&nbsp;&nbsp;<span th:text="*{staffPost}"></span></div>
+    <div class="look-item">职务:&nbsp;&nbsp;&nbsp;<span th:text="*{staffDuties}"></span></div>
+    <div class="look-item">部门:&nbsp;&nbsp;&nbsp;<span th:text="*{staffDepartment}"></span></div>
+    <div class="look-item">出生日期:&nbsp;&nbsp;&nbsp;<span th:text="*{staffBirthday}"></span></div>
+    <div class="look-item">婚姻状况:&nbsp;&nbsp;&nbsp;<span th:text="*{staffMaritalStatus}"></span></div>
+    <div class="look-item">联系电话:&nbsp;&nbsp;&nbsp;<span th:text="*{staffPhone}"></span></div>
+    <div class="look-item">入职时间:&nbsp;&nbsp;&nbsp;<span th:text="*{staffHiredate}"></span></div>
+    <div class="look-item">是否试用:&nbsp;&nbsp;&nbsp;<span th:text="*{staffProbation}"></span></div>
+    <div class="look-item">是否在职:&nbsp;&nbsp;&nbsp;<span th:text="*{staffOnthejob}"></span></div>
+    <div class="look-item">转正日期:&nbsp;&nbsp;&nbsp;<span th:text="*{staffBecomeARegularWorkerData}"></span></div>
+    <div class="look-item">离职日期:&nbsp;&nbsp;&nbsp;<span th:text="*{staffLeaveOfficeData}"></span></div>
+
+
+
+</div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/layuimini.css?v=2.0.4.2}" media="all">
+    <link rel="stylesheet" th:href="@{/css/themes/default.css}" media="all">
+    <link rel="stylesheet" th:href="@{/lib/font-awesome-4.7.0/css/font-awesome.min.css}" media="all">
+    <title>Title</title>
+</head>
+
+<style>
+    body{
+        padding-left: 50px;
+    }
+    .look-item{
+        /* background-color: red;*/
+        height: 50px;
+        width: 200px;
+        float: left;
+        margin: 10px 50px;
+        line-height: 50px;
+
+    }
+
+</style>
+
+<body>
+<div th:object="${attendance}">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>普通面板</legend>
+    </fieldset>
+
+    <!--<div class="layui-bg-gray" style="padding: 30px;">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md6">
+                <div class="layui-panel">
+                    <div style="padding: 50px 30px;">一个面板</div>
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <div class="layui-panel">
+                    <div style="padding: 50px 30px;">一个面板</div>
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <div class="layui-panel">
+                    <div style="padding: 50px 30px;">一个面板</div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+    <div class="look-item">员工编号:&nbsp;&nbsp;&nbsp;<span th:text="*{sraffNumber}"></span></div>
+    <div class="look-item">员工姓名:&nbsp;&nbsp;&nbsp;<span th:text="*{name}"></span></div>
+    <div class="look-item">入职时间:&nbsp;&nbsp;&nbsp;<span th:text="*{staffHiredate}"></span></div>
+    <div class="look-item">实际出勤天数:&nbsp;&nbsp;&nbsp;<span th:text="*{actualAttendance}"></span></div>
+    <div class="look-item">待岗:&nbsp;&nbsp;&nbsp;<span th:text="*{onDuty}"></span></div>
+    <div class="look-item">公休假天数合计:&nbsp;&nbsp;&nbsp;<span th:text="*{totalPublicHolidays}"></span></div>
+    <div class="look-item">年休假:&nbsp;&nbsp;&nbsp;<span th:text="*{annualLeave}"></span></div>
+    <div class="look-item">事假:&nbsp;&nbsp;&nbsp;<span th:text="*{compassionateLeave}"></span></div>
+    <div class="look-item">病假:&nbsp;&nbsp;&nbsp;<span th:text="*{sickLeave}"></span></div>
+    <div class="look-item">婚假:&nbsp;&nbsp;&nbsp;<span th:text="*{marriageHoliday}"></span></div>
+    <div class="look-item">丧假:&nbsp;&nbsp;&nbsp;<span th:text="*{bereavementLeave}"></span></div>
+    <div class="look-item">实际产假:&nbsp;&nbsp;&nbsp;<span th:text="*{actualMaternityLeave}"></span></div>
+    <div class="look-item">小产假:&nbsp;&nbsp;&nbsp;<span th:text="*{minorMaternityLeave}"></span></div>
+    <div class="look-item">陪产假:&nbsp;&nbsp;&nbsp;<span th:text="*{paternityLeave}"></span></div>
+    <div class="look-item">休假合计:&nbsp;&nbsp;&nbsp;<span th:text="*{totalLeave}"></span></div>
+    <div class="look-item">疫情“四类”情况:&nbsp;&nbsp;&nbsp;<span th:text="*{epidemicSituationof4}"></span></div>
+    <div class="look-item">弹性迟到:&nbsp;&nbsp;&nbsp;<span th:text="*{flexibleLateArrival}"></span></div>
+    <div class="look-item">迟到总次数:&nbsp;&nbsp;&nbsp;<span th:text="*{totalLate}"></span></div>
+    <div class="look-item">迟到15分钟以上1小时以内或15分钟内未补回:&nbsp;&nbsp;&nbsp;<span th:text="*{totalLateRepair151t}"></span></div>
+    <div class="look-item">迟到1小时以上3小时以内:&nbsp;&nbsp;&nbsp;<span th:text="*{totalLateRepair1t3t}"></span></div>
+    <div class="look-item">迟到3小时以上:&nbsp;&nbsp;&nbsp;<span th:text="*{totalLateRepairExceed3t}"></span></div>
+    <div class="look-item">忘记打卡:&nbsp;&nbsp;&nbsp;<span th:text="*{forgotToPunch}"></span></div>
+    <div class="look-item">早退总次数:&nbsp;&nbsp;&nbsp;<span th:text="*{totalOfEarlyLeave}"></span></div>
+    <div class="look-item">早退1小时以内:&nbsp;&nbsp;&nbsp;<span th:text="*{earlyLeave1t}"></span></div>
+    <div class="look-item">早退1小时以上3小时以内:&nbsp;&nbsp;&nbsp;<span th:text="*{earlyLeave1t3t}"></span></div>
+    <div class="look-item">早退3小时以上:&nbsp;&nbsp;&nbsp;<span th:text="*{earlyLeaveExceed3t}"></span></div>
+    <div class="look-item">旷工:&nbsp;&nbsp;&nbsp;<span th:text="*{absenteeism}"></span></div>
+    <div class="look-item">剩余病假:&nbsp;&nbsp;&nbsp;<span th:text="*{remainSickLeave}"></span></div>
+    <div class="look-item">今年享有年假:&nbsp;&nbsp;&nbsp;<span th:text="*{enjoyAnnualLeave}"></span></div>
+    <div class="look-item">累计已休年假:&nbsp;&nbsp;&nbsp;<span th:text="*{accumulatedAnnuaLeaveTaken}"></span></div>
+    <div class="look-item">剩余年假:&nbsp;&nbsp;&nbsp;<span th:text="*{remainAnnualLeave}"></span></div>
+    <div class="look-item">上月余假:&nbsp;&nbsp;&nbsp;<span th:text="*{remainLeaveOfLastMonth}"></span></div>
+    <div class="look-item">生日假:&nbsp;&nbsp;&nbsp;<span th:text="*{birthdayLeave}"></span></div>
+    <div class="look-item">本月公休假:&nbsp;&nbsp;&nbsp;<span th:text="*{publicHolidayOfThisMonth}"></span></div>
+    <div class="look-item">本月公休余假:&nbsp;&nbsp;&nbsp;<span th:text="*{remainPublicHolidayThisMonth}"></span></div>
+
+</div>
+</body>
+</html>

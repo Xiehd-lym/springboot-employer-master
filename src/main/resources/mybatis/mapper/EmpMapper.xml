@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.qqcn.dao.EmpMapper">
+  <resultMap id="BaseResultMap" type="cn.qqcn.entity.Emp">
+    <!--
+      WARNING - @mbg.generated
+    -->
+        <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="staff_name" jdbcType="VARCHAR" property="staffName" />
+    <result column="staff_no" jdbcType="VARCHAR" property="staffNo" />
+    <result column="sraff_number" jdbcType="VARCHAR" property="sraffNumber" />
+    <result column="staff_sex" jdbcType="VARCHAR" property="staffSex" />
+    <result column="staff_post" jdbcType="VARCHAR" property="staffPost" />
+    <result column="staff_duties" jdbcType="VARCHAR" property="staffDuties" />
+    <result column="staff_department" jdbcType="VARCHAR" property="staffDepartment" />
+    <result column="staff_birthday" jdbcType="VARCHAR" property="staffBirthday" />
+    <result column="staff_age" jdbcType="INTEGER" property="staffAge" />
+    <result column="staff_nation" jdbcType="VARCHAR" property="staffNation" />
+    <result column="staff_marital_status" jdbcType="VARCHAR" property="staffMaritalStatus" />
+    <result column="staff_phone" jdbcType="VARCHAR" property="staffPhone" />
+    <result column="staff_hiredate" jdbcType="VARCHAR" property="staffHiredate" />
+    <result column="staff_probation" jdbcType="VARCHAR" property="staffProbation" />
+    <result column="staff_onthejob" jdbcType="VARCHAR" property="staffOnthejob" />
+    <result column="staff_become_a_regular_worker_data" jdbcType="VARCHAR" property="staffBecomeARegularWorkerData" />
+    <result column="staff_leave_office_data" jdbcType="VARCHAR" property="staffLeaveOfficeData" />
+    <result column="staff_creation_date" jdbcType="VARCHAR" property="staffCreationDate" />
+    <result column="staff_modification_date" jdbcType="VARCHAR" property="staffModificationDate" />
+  </resultMap>
+
+
+  <!-- 查询员工列表数据 -->
+  <select id="getEmpList" parameterType="cn.qqcn.entity.query.EmpQuery" resultMap="BaseResultMap">
+    select * from emp a
+    <include refid="getEmpListWhere"></include>
+    order by id desc
+    limit #{start},#{limit}
+  </select>
+  <!-- 统计员工数据量 -->
+  <select id="countEmpList" parameterType="cn.qqcn.entity.query.EmpQuery" resultType="Long">
+    select count(1) from emp a
+    <include refid="getEmpListWhere"></include>
+  </select>
+  <!--条件查询员工列表-->
+  <sql id="getEmpListWhere">
+    <where>
+      <if test="staffName != null and staffName !=''">
+        a.staff_name like '%' #{staffName} '%'
+      </if>
+      <if test="sraffNumber != null and sraffNumber != ''">
+        <![CDATA[
+            and a.sraff_number = #{sraffNumber}
+            ]]>
+      </if>
+    </where>
+  </sql>
+
+  <!--添加员工-->
+  <insert id="addEmp" parameterType="Emp">
+    insert into emp
+    (id,
+staff_name,
+staff_no,
+sraff_number,
+staff_sex,
+staff_post,
+staff_duties,
+staff_department,
+staff_birthday,
+staff_age,
+staff_nation,
+staff_marital_status,
+staff_phone,
+staff_hiredate,
+staff_probation,
+staff_onthejob,
+staff_become_a_regular_worker_data,
+staff_leave_office_data,
+staff_creation_date,
+staff_modification_date)
+    values
+    (#{id},#{staffName},#{staffNo},#{sraffNumber},#{staffSex},#{staffPost},#{staffDuties},
+    #{staffDepartment},#{staffBirthday},#{staffAge},#{staffNation},#{staffMaritalStatus},
+    #{staffPhone},#{staffHiredate},#{staffProbation},#{staffOnthejob},#{staffBecomeARegularWorkerData},
+    #{staffLeaveOfficeData},#{staffCreationDate},#{staffModificationDate}
+    )
+</insert>
+
+  <delete id="deleteEmpByIds" parameterType="String">
+    delete from emp where id in (${ids})
+</delete>
+
+  <select id="getEmpById" parameterType="Integer" resultType="Emp">
+    select * from emp where id = #{id}
+  </select>
+
+
+  <update id="updateEmp" parameterType="Emp">
+    update emp
+    set id = #{id},
+        staff_name = #{staffName},
+        staff_no = #{staffNo},
+        sraff_number =  #{sraffNumber},
+        staff_sex = #{staffSex},
+        staff_post = #{staffPost},
+        staff_duties = #{staffDuties},
+        staff_department = #{staffDepartment},
+        staff_birthday= #{staffBirthday},
+        staff_age= #{staffAge},
+        staff_nation= #{staffNation},
+        staff_marital_status= #{staffMaritalStatus},
+        staff_phone= #{staffPhone},
+        staff_hiredate= #{staffHiredate},
+        staff_probation= #{staffProbation},
+        staff_onthejob= #{staffOnthejob},
+        staff_become_a_regular_worker_data= #{staffBecomeARegularWorkerData},
+        staff_leave_office_data= #{staffLeaveOfficeData},
+        staff_creation_date= #{staffCreationDate},
+        staff_modification_date = #{staffModificationDate}
+    where id = #{id}
+</update>
+
+
+
+
+</mapper>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.qqcn.dao.SalaryMapper">
+  <resultMap id="BaseResultMap" type="cn.qqcn.entity.Salary">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sraff_number" jdbcType="VARCHAR" property="sraffNumber" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="month" jdbcType="VARCHAR" property="month" />
+    <result column="tax_payable_this_month" jdbcType="VARCHAR" property="taxPayableThisMonth" />
+    <result column="payable_amount" jdbcType="VARCHAR" property="payableAmount" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="salary_days_in_this_month" jdbcType="INTEGER" property="salaryDaysInThisMonth" />
+    <result column="standard_of_original_post" jdbcType="VARCHAR" property="standardOfOriginalPost" />
+    <result column="post_salary" jdbcType="VARCHAR" property="postSalary" />
+    <result column="full_attendance_bonus_reward" jdbcType="VARCHAR" property="fullAttendanceBonusReward" />
+    <result column="social_security_subsidy" jdbcType="VARCHAR" property="socialSecuritySubsidy" />
+    <result column="the_first_award_of_5S" jdbcType="VARCHAR" property="theFirstAwardOf5s" />
+    <result column="other_subsidies" jdbcType="VARCHAR" property="otherSubsidies" />
+    <result column="reissue_salary" jdbcType="VARCHAR" property="reissueSalary" />
+    <result column="total_standard_salary_items" jdbcType="VARCHAR" property="totalStandardSalaryItems" />
+    <result column="personal_leave_deduction" jdbcType="VARCHAR" property="personalLeaveDeduction" />
+    <result column="deduction_for_sick_leave" jdbcType="VARCHAR" property="deductionForSickLeave" />
+    <result column="deduction_for_absenteeism" jdbcType="VARCHAR" property="deductionForAbsenteeism" />
+    <result column="late_deduction" jdbcType="VARCHAR" property="lateDeduction" />
+    <result column="forget_to_punch_in_and_deduct" jdbcType="VARCHAR" property="forgetToPunchInAndDeduct" />
+    <result column="deduction_for_early_leave" jdbcType="VARCHAR" property="deductionForEarlyLeave" />
+    <result column="total_attendance_deduction" jdbcType="VARCHAR" property="totalAttendanceDeduction" />
+    <result column="final_penalty_in_5S_evaluation" jdbcType="VARCHAR" property="finalPenaltyIn5sEvaluation" />
+    <result column="salary_deduction" jdbcType="VARCHAR" property="salaryDeduction" />
+    <result column="other_deductions" jdbcType="VARCHAR" property="otherDeductions" />
+    <result column="total_deduction" jdbcType="VARCHAR" property="totalDeduction" />
+    <result column="pay_personal_social_insurance_on_behalf" jdbcType="VARCHAR" property="payPersonalSocialInsuranceOnBehalf" />
+    <result column="payment_of_individual_accumulation_fund" jdbcType="VARCHAR" property="paymentOfIndividualAccumulationFund" />
+    <result column="other_payments" jdbcType="VARCHAR" property="otherPayments" />
+    <result column="renewal_commission" jdbcType="VARCHAR" property="renewalCommission" />
+    <result column="team_performance" jdbcType="VARCHAR" property="teamPerformance" />
+    <result column="team_class_elimination" jdbcType="VARCHAR" property="teamClassElimination" />
+    <result column="personal_elimination" jdbcType="VARCHAR" property="personalElimination" />
+    <result column="retention_from_previous_agreements" jdbcType="VARCHAR" property="retentionFromPreviousAgreements" />
+    <result column="other_awards" jdbcType="VARCHAR" property="otherAwards" />
+    <result column="commission_of_relation_sheet" jdbcType="VARCHAR" property="commissionOfRelationSheet" />
+    <result column="course_setter_draw_a_percentage" jdbcType="VARCHAR" property="courseSetterDrawAPercentage" />
+    <result column="name_recruit_draw_a_percentage" jdbcType="VARCHAR" property="nameRecruitDrawAPercentage" />
+    <result column="telephone_interview_draw_a_percentage" jdbcType="VARCHAR" property="telephoneInterviewDrawAPercentage" />
+    <result column="reissue_draw_a_percentage" jdbcType="VARCHAR" property="reissueDrawAPercentage" />
+    <result column="refund_and_deduction_of_this_month" jdbcType="VARCHAR" property="refundAndDeductionOfThisMonth" />
+    <result column="commission_payable_this_month" jdbcType="VARCHAR" property="commissionPayableThisMonth" />
+    <result column="commission_actually_paid_this_month" jdbcType="VARCHAR" property="commissionActuallyPaidThisMonth" />
+    <result column="part_time_salary" jdbcType="VARCHAR" property="partTimeSalary" />
+    <result column="part_time_class_hours" jdbcType="VARCHAR" property="partTimeClassHours" />
+    <result column="full_time_remuneration" jdbcType="VARCHAR" property="fullTimeRemuneration" />
+    <result column="full_time_class_hours" jdbcType="VARCHAR" property="fullTimeClassHours" />
+    <result column="remuneration_other" jdbcType="VARCHAR" property="remunerationOther" />
+    <result column="other_remuneration_awards" jdbcType="VARCHAR" property="otherRemunerationAwards" />
+    <result column="total_remuneration" jdbcType="VARCHAR" property="totalRemuneration" />
+    <result column="performance_criteria" jdbcType="VARCHAR" property="performanceCriteria" />
+    <result column="pay_days" jdbcType="VARCHAR" property="payDays" />
+    <result column="performance_base" jdbcType="VARCHAR" property="performanceBase" />
+    <result column="performance_score" jdbcType="VARCHAR" property="performanceScore" />
+    <result column="performance_ratio" jdbcType="VARCHAR" property="performanceRatio" />
+    <result column="actual_amount_money" jdbcType="VARCHAR" property="actualAmountMoney" />
+  </resultMap>
+
+
+
+  <!--查询薪资列表数据-->
+  <select id="getSalList" parameterType="cn.qqcn.entity.query.Salquest" resultMap="BaseResultMap">
+    select * from salary a
+    <include refid="getSalListWhere"></include>
+    order by id desc
+    limit #{start},#{limit}
+  </select>
+
+  <!--统计列表数据-->
+  <select id="countSalList" parameterType="cn.qqcn.entity.query.Salquest" resultType="Long">
+    select count(1) from salary a
+    <include refid="getSalListWhere"></include>
+  </select>
+
+  <!--条件查询参数-->
+  <sql id="getSalListWhere">
+    <where>
+      <if test="name != null and name != '' ">
+        a.name like '%' #{name} '%'
+      </if>
+      <if test="month != null and month !='' ">
+        <![CDATA[
+            and a.month = #{month}
+            ]]>
+      </if>
+      <if test="sraffNumber != null and sraffNumber!='' ">
+        <![CDATA[
+            and a.sraff_number = #{sraff_number}
+            ]]>
+      </if>
+    </where>
+  </sql>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

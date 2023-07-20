@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.qqcn.dao.AttendanceMapper">
+  <resultMap id="BaseResultMap" type="cn.qqcn.entity.Attendance">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sraff_number" jdbcType="VARCHAR" property="sraffNumber" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="staff_hiredate" jdbcType="DATE" property="staffHiredate" />
+    <result column="actual_attendance" jdbcType="INTEGER" property="actualAttendance" />
+    <result column="on_duty" jdbcType="INTEGER" property="onDuty" />
+    <result column="total_public_holidays" jdbcType="INTEGER" property="totalPublicHolidays" />
+    <result column="annual_leave" jdbcType="INTEGER" property="annualLeave" />
+    <result column="compassionate_leave" jdbcType="INTEGER" property="compassionateLeave" />
+    <result column="sick_leave" jdbcType="INTEGER" property="sickLeave" />
+    <result column="marriage_holiday" jdbcType="INTEGER" property="marriageHoliday" />
+    <result column="bereavement_leave" jdbcType="INTEGER" property="bereavementLeave" />
+    <result column="actual_maternity_leave" jdbcType="INTEGER" property="actualMaternityLeave" />
+    <result column="minor_maternity_leave" jdbcType="INTEGER" property="minorMaternityLeave" />
+    <result column="paternity_leave" jdbcType="INTEGER" property="paternityLeave" />
+    <result column="total_leave" jdbcType="INTEGER" property="totalLeave" />
+    <result column="epidemic_situationof4" jdbcType="INTEGER" property="epidemicSituationof4" />
+    <result column="flexible_late_arrival" jdbcType="INTEGER" property="flexibleLateArrival" />
+    <result column="total_late" jdbcType="INTEGER" property="totalLate" />
+    <result column="total_late_repair_15_1t" jdbcType="INTEGER" property="totalLateRepair151t" />
+    <result column="total_late_repair_1t_3t" jdbcType="INTEGER" property="totalLateRepair1t3t" />
+    <result column="total_late_repair_exceed_3t" jdbcType="INTEGER" property="totalLateRepairExceed3t" />
+    <result column="forgot_to_punch" jdbcType="INTEGER" property="forgotToPunch" />
+    <result column="total_of_early_leave" jdbcType="INTEGER" property="totalOfEarlyLeave" />
+    <result column="early_leave_1t" jdbcType="INTEGER" property="earlyLeave1t" />
+    <result column="early_leave_1t_3t" jdbcType="INTEGER" property="earlyLeave1t3t" />
+    <result column="early_leave_exceed_3t" jdbcType="INTEGER" property="earlyLeaveExceed3t" />
+    <result column="absenteeism" jdbcType="INTEGER" property="absenteeism" />
+    <result column="remain_sick_leave" jdbcType="INTEGER" property="remainSickLeave" />
+    <result column="enjoy_annual_leave" jdbcType="INTEGER" property="enjoyAnnualLeave" />
+    <result column="accumulated_annua_leave_taken" jdbcType="INTEGER" property="accumulatedAnnuaLeaveTaken" />
+    <result column="remain_annual_leave" jdbcType="INTEGER" property="remainAnnualLeave" />
+    <result column="remain_leave_of_last_month" jdbcType="INTEGER" property="remainLeaveOfLastMonth" />
+    <result column="birthday_leave" jdbcType="INTEGER" property="birthdayLeave" />
+    <result column="public_holiday_of_this_month" jdbcType="INTEGER" property="publicHolidayOfThisMonth" />
+    <result column="remain_public_holiday_this_month" jdbcType="INTEGER" property="remainPublicHolidayThisMonth" />
+  </resultMap>
+
+
+  <!-- 查询员工考勤列表数据 -->
+  <select id="getAttendList" parameterType="cn.qqcn.entity.query.EmpQuery" resultMap="BaseResultMap">
+    select * from attendance a
+    <include refid="getAttendListWhere"></include>
+    order by id desc
+    limit #{start},#{limit}
+  </select>
+  <!-- 统计员工考勤数据量 -->
+  <select id="countAttendList" parameterType="cn.qqcn.entity.query.EmpQuery" resultType="Long">
+    select count(1) from attendance a
+    <include refid="getAttendListWhere"></include>
+  </select>
+  <!--条件查询员工考勤列表-->
+  <sql id="getAttendListWhere">
+    <where>
+      <if test="staffName != null and staffName !=''">
+        a.name like '%' #{staffName} '%'
+      </if>
+      <if test="sraffNumber != null and sraffNumber != ''">
+        <![CDATA[
+            and a.sraff_number = #{sraffNumber}
+            ]]>
+      </if>
+    </where>
+  </sql>
+
+
+  <select id="getAttendById" parameterType="Integer" resultType="Attendance">
+    select * from attendance where id = #{id}
+  </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

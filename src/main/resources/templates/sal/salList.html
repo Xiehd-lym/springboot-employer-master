@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/layuimini.css?v=2.0.4.2}" media="all">
+    <link rel="stylesheet" th:href="@{/css/themes/default.css}" media="all">
+    <link rel="stylesheet" th:href="@{/lib/font-awesome-4.7.0/css/font-awesome.min.css}" media="all">
+    <title>title</title>
+    <style>
+        .div-content{
+            background-color: white;
+            /*修改四个角有一定弧度*/
+            border-radius: 5px;
+            padding: 15px;
+        }
+
+        .table-search-fieldset {
+            margin: 0;
+            border: 1px solid #e6e6e6;
+            padding: 10px 20px 5px 20px;
+            color: #6b6b6b;
+        }
+        .layui-mytable{
+            overflow: scroll;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="div-content">
+    <!--搜索表单-->
+    <form class="layui-form layui-form-pane" id="form-search" action="">
+        <fieldset class="table-search-fieldset">
+            <legend>搜索条件</legend>
+            <!--行内表单-->
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">员工姓名</label>
+                    <div class="layui-input-inline" style="width: 150px;">
+                        <input type="text" name="name" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">员工编号</label>
+                    <div class="layui-input-inline" style="width: 150px;">
+                        <input type="text" name="sraffNumber" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <button id="btn-search" lay-submit lay-filter="btn-search-filter" type="button" class="layui-btn layui-btn-radius layui-btn-normal">
+                        <i class="layui-icon layui-icon-search layui-font-12"></i>
+                        搜索
+                    </button>
+                </div>
+
+                <div class="layui-inline">
+                    <button id="btn-reset" type="reset" class="layui-btn layui-btn-radius layui-btn-normal">
+                        <i class="layui-icon layui-icon-fonts-clear layui-font-12"></i>
+                        重置
+                    </button>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+    <!--数据表格-->
+    <table id="table-sal"  lay-filter="table-sal-filter"></table>
+
+</div>
+<script type="text/html" id="col-emp-toolbar">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<!--<script type="text/html" id="convertSex">
+    {{#
+    if(d.sex == 'M'){
+    return '男';
+    }else if(d.sex == 'F'){
+    return '女';
+    }else{
+    return '妖'
+    }
+    }}
+</script>
+<script type="text/html" id="convertDept">
+    {{#
+    return d.dept.deptName;
+    }}
+</script>-->
+
+<script type="text/html" id="table-sal-toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">新增</button>
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete">删除</button>
+    </div>
+</script>
+
+<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}" charset="utf-8"></script>
+<script th:inline="javascript">
+    var ctxPath = [[@{/}]];
+        //使用日期组件
+        layui.use(['laydate','table','form',], function(){
+            var laydate = layui.laydate;
+            var table = layui.table;
+            var form = layui.form;
+
+/*            //执行一个laydate实例
+            laydate.render({
+                elem: '.date' //指定元素,点击这个元素就会弹出组件
+            });*/
+
+            //执行员工列表表格实例渲染,参数在官网上有说明
+            //请求url后返回的数据都会存储在里面
+            table.render({
+                elem: '#table-sal'  //指定渲染目标
+                ,url: ctxPath + 'sal/salList' //数据接口
+                ,page: true //开启分页
+                ,toolbar: "#table-sal-toolbar"
+                ,limits: [5,10,20]
+                ,limit: 5
+                ,height: 500
+                ,cols: [[ //表头
+                    {type: "checkbox",width: 60,fixed: 'left'}
+
+                    /*filed:要与实体类属性名一致,*/
+                    ,{field: 'sraffNumber', title: '员工编号',sort: true, align: 'center',width:120}
+                    ,{field: 'name', title: '姓名', width:80}
+                    ,{field: 'department', title: '所属部门', width:80}
+                    ,{field: 'unit', title: '所属单位', width:80}
+                    ,{field: 'month', title: '月份',width:80}
+                    ,{field: 'taxPayableThisMonth', title: '本月应缴个税款', width:80}
+                    ,{field: 'payableAmount', title: '应发金额', width:80}
+                    ,{field: 'remarks', title: '备注',width:80}
+                    ,{field: 'salaryDaysInThisMonth', title: '本月计薪天数', width:80}
+                    ,{field: 'standardOfOriginalPost', title: '原岗位工资标准', width:80}
+                    ,{field: 'postSalary', title: '岗位工资', width:80}
+                    ,{field: 'fullAttendanceBonusReward', title: '全勤奖', width:80}
+                    ,{field: 'socialSecuritySubsidy', title: '社保补贴',width:80}
+                    ,{field: 'theFirstAwardOf5s', title: '评比5S首位奖励', width:80}
+                    ,{field: 'otherSubsidies', title: '其他补贴', width:80}
+                    ,{field: 'reissueSalary', title: '补发工资', width:80}
+                    ,{field: 'totalStandardSalaryItems', title: '标准工资项合计', width:80}
+                    ,{field: 'personalLeaveDeduction', title: '事假扣款', width:80}
+                    ,{field: 'deductionForSickLeave', title: '病假扣款',width:80}
+                    ,{field: 'deductionForAbsenteeism', title: '旷工扣款',width:80}
+                    ,{field: 'lateDeduction', title: '迟到扣款',width:80}
+                    ,{field: 'forgetToPunchInAndDeduct', title: '忘打卡扣款',width:80}
+                    ,{field: 'totalAttendanceDeduction', title: '考勤扣款合计',width:80}
+                    ,{field: 'finalPenaltyIn5sEvaluation', title: '评比5s末位罚款',width:80}
+                    ,{field: 'salaryDeduction', title: '追扣工资',width:80}
+                    ,{field: 'otherDeductions', title: '其它扣款',width:80}
+                    ,{field: 'totalDeduction', title: '扣款合计',width:80}
+                    ,{field: 'payPersonalSocialInsuranceOnBehalf', title: '代缴个人社保',width:80}
+                    ,{field: 'paymentOfIndividualAccumulationFund', title: '代缴个人公积金',width:80}
+                    ,{field: 'otherPayments', title: '其他代缴',width:80}
+                    ,{field: 'renewalCommission', title: '续费提成',width:80}
+                    ,{field: 'teamPerformance', title: '团队业绩',width:80}
+                    ,{field: 'teamClassElimination', title: '团队课消',width:80}
+                    ,{field: 'personalElimination', title: '个人课消',width:80}
+                    ,{field: 'retentionFromPreviousAgreements', title: '往期协议提留',width:80}
+                    ,{field: 'otherAwards', title: '其他奖励',width:80}
+                    ,{field: 'commissionOfRelationSheet', title: '关系单提成',width:80}
+                    ,{field: 'courseSetterDrawAPercentage', title: '排课员提成',width:80}
+                    ,{field: 'nameRecruitDrawAPercentage', title: '招聘提成',width:80}
+                    ,{field: 'telephoneInterviewDrawAPercentage', title: '进电直访提成',width:80}
+                    ,{field: 'reissueDrawAPercentage', title: '补发提成',width:80}
+                    ,{field: 'refundAndDeductionOfThisMonth', title: '本月退费扣款',width:80}
+                    ,{field: 'commissionPayableThisMonth', title: '本月应发提成',width:80}
+                    ,{field: 'commissionActuallyPaidThisMonth', title: '本月实发提成',width:80}
+                    ,{field: 'partTimeSalary', title: '兼职课酬',width:80}
+                    ,{field: 'partTimeClassHours', title: '兼职课时',width:80}
+                    ,{field: 'fullTimeRemuneration', title: '专职课酬',width:80}
+                    ,{field: 'fullTimeClassHours', title: '专职课时',width:80}
+                    ,{field: 'remunerationOther', title: '课酬追补追扣',width:80}
+                    ,{field: 'otherRemunerationAwards', title: '其他课酬奖励',width:80}
+                    ,{field: 'totalRemuneration', title: '课酬合计',width:80}
+                    ,{field: 'performanceCriteria', title: '绩效标准',width:80}
+                    ,{field: 'payDays', title: '薪资天数',width:80}
+                    ,{field: 'performanceBase', title: '绩效基数',width:80}
+                    ,{field: 'performanceRatio', title: '绩效比例',width:80}
+                    ,{field: 'actualAmountMoney', title: '实发金额',width:80}
+
+                    /*                ,{field: 'sex', title: '性别', width:80,sort: true,templet: '#convertSex' }
+                                    ,{field: 'age', title: '年龄', width:80 ,}
+                                    ,{field: 'sal', title: '工资', width: 120 ,}
+                                    ,{field: 'dept', title: '部门', width: 140, templet:"#convertDept"}
+                                    ,{field: 'birthday', title: '生日', width:120, }
+                                    ,{field: 'address', title: '家庭住址'}*/
+                    ,{title: '操作', width: 150,toolbar: '#col-emp-toolbar',fixed:"right",align: "center"}
+                ]]
+            });
+
+            //监听表单提交
+            form.on('submit(btn-search-filter)', function(data){
+                console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+                // 重载表格 - 这里以搜索为例
+                //填写我们的表格id
+                table.reload('table-sal', {
+                    //重载表格时,条件参数
+                    where: { //设定异步数据接口的额外参数，任意设
+                        name: data.field.name,
+                        sraffNumber: data.field.sraffNumber
+                    }
+                    ,page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            });
+
+            // 监听操作列
+            table.on('tool(table-sal-filter)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+                var data = obj.data; //获得当前行数据
+                var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+                if(layEvent == 'del'){
+                    layer.confirm('您确认删除该员工：'+data.name + " ？", {icon: 3, title:'删除确认'}, function(index){
+                        // 异步请求删除数据、结果提示、刷新表格
+                        var url = ctxPath + "emp/" + data.id;
+                        var params = {
+                            _method:"DELETE"
+                        }
+                        $.post(url,params,function (response) {
+                            if(response.code == 0){
+                                layer.msg(response.message, {icon: 1});
+                                refreshTable();
+                            }else{
+                                layer.alert(response.message, {icon: 2,anim:6 });
+                            }
+
+                        });
+
+                        layer.close(index);
+                    });
+                }else if(layEvent == 'edit'){
+                    layer.open({
+                        type: 2,
+                        title: "修改员工",
+                        shadeClose: false,
+                        area: ['100%', '100%'],
+                        content: ctxPath  + 'emp/' + data.id
+                    });
+                }
+            });
+
+
+            //新增按钮触发事件
+            //toolbar(填写表格的lay-filter属性),表示监听哪个表格的工具条
+            table.on('toolbar(table-sal-filter)', function(obj){
+                //监听add按钮
+                if(obj.event == 'add'){
+                    layer.open({
+                        type: 2,
+                        title:'新增员工',  //页面标题
+                        area: ['100%','100%'], //页面大小,可以百分比,也可以px
+                        shadeClose: false,  //是否点击遮罩层会关闭页面
+                        content: ctxPath + 'emp/add/ui'
+                    });
+                } else if(obj.event == 'delete'){ ////监听delete按钮
+                    var checkStatus = table.checkStatus('table-sal'); //idTest 即为基础参数 id 对应的值
+                    // 如果没有选中任何数据
+                    if(checkStatus.data.length == 0 ){
+                        layer.alert('您没有选中任何数据', {icon: 2,anim:6,title:"警告" });
+                        return false;
+                    }
+                    // 选中的员工id
+                    //虽然我们没有在表格中显示id,但id是通过emp传回来了,我们能够找到,用法就是this.id,this代表这个表格
+                    var idArr = new Array();
+                    $(checkStatus.data).each(function () {
+                        idArr.push(this.id);
+                    });
+                    console.log(idArr)
+                    layer.confirm('您确认删除选中记录？', {icon: 3, title:'删除确认'}, function(index){
+                        // 异步请求删除数据、结果提示、刷新表格
+                        // join(),js里的Array里常用的方法,以指定分隔符将数组连成字符串
+                        var url = ctxPath + "emp/" + idArr.join(",");
+                        var params = {
+                            _method:"DELETE"
+                        }
+                        $.post(url,params,function (response) {
+                            if(response.code == 0){  //成功
+                                layer.msg(response.message, {icon: 1});
+                                refreshTable();
+                            }else{
+                                layer.alert(response.message, {icon: 2,anim:6 });
+                            }
+                        });
+
+                        layer.close(index);
+                    });
+
+                }
+
+            });
+        });
+
+    //刷新表格函数,点击一下父页面的刷新按钮就能刷新了
+    function refreshTable() {
+        $("#btn-reset").click();
+        $("#btn-search").click();
+    };
+
+</script>
+
+</body>
+
+</html>

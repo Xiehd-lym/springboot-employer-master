@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/layuimini.css?v=2.0.4.2}" media="all">
+    <link rel="stylesheet" th:href="@{/css/themes/default.css}" media="all">
+    <link rel="stylesheet" th:href="@{/lib/font-awesome-4.7.0/css/font-awesome.min.css}" media="all">
+</head>
+<style>
+    body{
+        padding: 20px;
+    }
+</style>
+
+<body>
+<form class="layui-form" action="">
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-inline">
+                <!--name代表传给后端的属性名,lay-verify="required"表示此项必填-->
+                <input type="text" name="staffName" required  lay-verify="required" placeholder="请输入员工姓名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-block">
+                <input type="radio" name="staffSex" value="男" title="男">
+                <input type="radio" name="staffSex" value="女" title="女" checked>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">年龄</label>
+            <div class="layui-input-inline">
+                <!--name代表传给后端的属性名,lay-verify="required"表示此项必填-->
+                <input type="text" name="staffAge" required  lay-verify="required" placeholder="请输入员工姓名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">民族</label>
+            <div class="layui-input-inline">
+                <!--name代表传给后端的属性名,lay-verify="required"表示此项必填-->
+                <!--<input type="text" name="staffNation" required  lay-verify="required" placeholder="请输入员工姓名" autocomplete="off" class="layui-input">-->
+                <select name="staffNation" lay-verify="required" lay-search="">
+                    <option th:each="nation:${staffNation}">
+                    <span th:text="${nation}"></span>
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">身份证号</label>
+            <div class="layui-input-inline">
+                <!--name代表传给后端的属性名,lay-verify="required"表示此项必填-->
+                <input type="text" name="staffNo" required  lay-verify="required" placeholder="请输入身份证号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">员工编号</label>
+            <div class="layui-input-inline">
+                <!--name代表传给后端的属性名,lay-verify="required"表示此项必填-->
+                <input type="text" name="sraffNumber" required  lay-verify="required" placeholder="请输入员工编号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">岗位</label>
+            <div class="layui-input-inline">
+                <!--name代表传给后端的属性名,lay-verify="required"表示此项必填-->
+                <input type="text" name="staffPost" required  lay-verify="required" placeholder="请输入岗位" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">职务</label>
+            <div class="layui-input-inline">
+                <!--name代表传给后端的属性名,lay-verify="required"表示此项必填-->
+                <input type="text" name="staffDuties" required  lay-verify="required" placeholder="请输入职务" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">部门</label>
+            <div class="layui-input-inline">
+                <!--name代表传给后端的属性名,lay-verify="required"表示此项必填-->
+                <select name="staffDepartment" lay-verify="required">
+                    <option value="">请选择</option>
+                    <option th:each="dept:${deptList}" th:value="${dept.deptId}">
+                        <span th:text="${dept.deptName}"></span>
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">出生日期</label>
+            <div class="layui-input-inline">
+                <!--name代表传给后端的属性名,lay-verify="required"表示此项必填-->
+                <input type="Date" name="staffBirthday" required  lay-verify="required" placeholder="请输入员工姓名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">婚姻状况</label>
+            <div class="layui-input-inline">
+                <!--name代表传给后端的属性名,lay-verify="required"表示此项必填-->
+                <select name="staffMaritalStatus" lay-verify="required" lay-search="">
+                    <option value="">请选择</option>
+                    <option value="是">未婚</option>
+                    <option value="否">已婚</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">联系电话</label>
+            <div class="layui-input-inline">
+                <!--name代表传给后端的属性名,lay-verify="required"表示此项必填-->
+                <input type="text" name="staffPhone" required  lay-verify="required" placeholder="请输入员工姓名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">入职时间</label>
+            <div class="layui-input-inline">
+                <!--name代表传给后端的属性名,lay-verify="required"表示此项必填-->
+                <input type="Date" name="staffHiredate" required  lay-verify="required" placeholder="请输入员工生日" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">是否试用</label>
+            <div class="layui-input-inline">
+                <!--name代表传给后端的属性名,lay-verify="required"表示此项必填-->
+                <select name="staffProbation" lay-verify="required" lay-search="">
+                    <option value="">请选择</option>
+                    <option value="是">是</option>
+                    <option value="否">否</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">是否在职</label>
+            <div class="layui-input-inline">
+                <!--name代表传给后端的属性名,lay-verify="required"表示此项必填-->
+                <select name="staffOnthejob" lay-verify="required" lay-search="">
+                    <option value="">请选择</option>
+                    <option value="是">是</option>
+                    <option value="否">否</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">转正日期</label>
+            <div class="layui-input-inline">
+                <!--name代表传给后端的属性名,lay-verify="required"表示此项必填-->
+                <input type="Date" name="staffBecomeARegularWorkerData" required  lay-verify="required" placeholder="请输入员工生日" autocomplete="off" class="layui-input">
+
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">离职日期</label>
+            <div class="layui-input-inline">
+                <!--name代表传给后端的属性名,lay-verify="required"表示此项必填-->
+                <input type="Date" name="staffLeaveOfficeData" required  lay-verify="required" placeholder="请输入员工姓名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button id="btn-submit" class="layui-btn" lay-submit lay-filter="btn-submit-filter">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+
+<!--
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">年龄</label>
+        <div class="layui-input-block">
+            &lt;!&ndash;name代表传给后端对象里的属性名,lay-verify="required"表示此项必填&ndash;&gt;
+            <input type="text" name="age" required  lay-verify="required|number" placeholder="请输入员工年龄" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">工资</label>
+        <div class="layui-input-block">
+            &lt;!&ndash;name代表传给后端的键名,lay-verify="required"表示此项必填&ndash;&gt;
+            <input type="text" name="sal" required  lay-verify="required|number" placeholder="请输入员工工资" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">生日</label>
+        <div class="layui-input-block">
+            &lt;!&ndash;name代表传给后端的键名,lay-verify="required"表示此项必填&ndash;&gt;
+            <input type="text" name="birthday" required  lay-verify="required" placeholder="请输入员工生日" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">部门</label>
+        <div class="layui-input-block">
+            <select name="deptId" lay-verify="required">
+                <option value="">请选择</option>
+                <option th:each="dept:${deptList}" th:value="${dept.deptId}">
+                    <span th:text="${dept.deptName}"></span>
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">家庭地址</label>
+        <div class="layui-input-block">
+            <textarea name="desc" placeholder="请输入家庭地址" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button id="btn-submit" class="layui-btn" lay-submit lay-filter="btn-submit-filter">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>-->
+
+</form>
+
+<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+<script th:inline="javascript">
+    var ctxPath = [[@{/}]];
+    layui.use(['form','laydate'], function(){
+        var form = layui.form;
+        var laydate = layui.laydate;
+        var $ = layui.$;  //引用layui里内置的JQuery
+
+        form.render();
+        laydate.render({
+           elem: '[name="staffBirthday"]',  //绑定指定元素可以这么写,这是绑定name,也可以绑定class和id,写法为'.xxx'和'#xxx'
+        });
+        laydate.render({
+            elem: '[name="staffHiredate"]',  //绑定指定元素可以这么写,这是绑定name,也可以绑定class和id,写法为'.xxx'和'#xxx'
+        });
+        laydate.render({
+            elem: '[name="staffBecomeARegularWorkerData"]',  //绑定指定元素可以这么写,这是绑定name,也可以绑定class和id,写法为'.xxx'和'#xxx'
+        });
+        laydate.render({
+            elem: '[name="staffLeaveOfficeData"]',  //绑定指定元素可以这么写,这是绑定name,也可以绑定class和id,写法为'.xxx'和'#xxx'
+        });
+
+        //表单提交
+        form.on('submit(btn-submit-filter)', function(data){
+            console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+            //置灰提交按钮
+            $("#btn-submit").attr("disabled","disabled").addClass("layui-btn-disabled");
+            //异步提交数据,使用jquery,也能用axios
+            var url = ctxPath + 'emp';
+            $.post(url,data.field,function (response){
+                if(response.code == 0){
+                    // 成功提示,读取后端传来的msg信息
+                    layer.msg(response.message, {
+                        icon: 1,    //成功图标
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                    }, function(){  //关闭之后想做什么
+                        // 刷新表格,我们这个页面是个弹出页面,而我们想要刷新父页面的表格
+                        parent.refreshTable();
+                        // 关闭窗口
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭
+                    });
+                }else {
+                   //表单提交失败,则恢复提交按钮
+                    $("#btn-submit").removeAttr("disabled","disabled").removeClass("layui-btn-disabled");
+                    // 失败则提示错误信息，窗口不关闭
+                    layer.msg("新增失败，请联系管理员", {
+                        icon: 2,  //哭脸
+                        anim: 6     //抖动效果
+                    });
+                }
+            });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+
+    });
+</script>
+</body>
+</html>

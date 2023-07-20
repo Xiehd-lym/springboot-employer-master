@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.qqcn.dao.JournalMapper">
+  <resultMap id="BaseResultMap" type="cn.qqcn.entity.Journal">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="journal_id" jdbcType="INTEGER" property="journalId" />
+    <result column="journal_log_time" jdbcType="TIMESTAMP" property="journalLogTime" />
+    <result column="journal_operator" jdbcType="VARCHAR" property="journalOperator" />
+    <result column="journal_results_of_enforcement" jdbcType="VARCHAR" property="journalResultsOfEnforcement" />
+    <result column="journal_execution_time" jdbcType="TIMESTAMP" property="journalExecutionTime" />
+    <result column="journal_log_content" jdbcType="LONGVARCHAR" property="journalLogContent" />
+  </resultMap>
+</mapper>
